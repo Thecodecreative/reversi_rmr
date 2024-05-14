@@ -1,0 +1,51 @@
+{
+  "name": "reversi_rmr",
+  "version": "0.0.1",
+  "description": "This is a web version of the game reversi.",
+  "main": "server.js",
+  "dependencies": {
+    "accepts": "^1.3.8",
+    "base64id": "^2.0.0",
+    "colors": "^1.4.0",
+    "cookie": "^0.4.2",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "engine.io": "^6.5.4",
+    "engine.io-parser": "^5.2.2",
+    "mime": "^1.6.0",
+    "mime-db": "^1.52.0",
+    "mime-types": "^2.1.35",
+    "minimist": "^0.0.10",
+    "ms": "^2.1.2",
+    "negotiator": "^0.6.3",
+    "node-static": "^0.7.11",
+    "object-assign": "^4.1.1",
+    "optimist": "^0.6.1",
+    "socket.io": "^4.7.5",
+    "socket.io-adapter": "^2.5.4",
+    "socket.io-parser": "^4.2.4",
+    "undici-types": "^5.26.5",
+    "vary": "^1.1.2",
+    "wordwrap": "^0.0.3",
+    "ws": "^8.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Thecodecreative/reversi_rmr.git"
+  },
+  "keywords": [
+    "reversi",
+    "game",
+    "mhcid"
+  ],
+  "author": "rose merline reveil",
+  "license": " GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Thecodecreative/reversi_rmr/issues"
+  },
+  "homepage": "https://github.com/Thecodecreative/reversi_rmr#readme"
+}
