@@ -4,11 +4,11 @@
 let static =require('node-static');
 
 /* Set up the http server library */
-let http= require ('http')
+let http= require ('http');
 
 /* Assume that we are running on Heroku*/
 let port=process.env.PORT;
-let directory=_dirname + '/public';
+let directory=__dirname + '/public';
 
 /* if we are not running on Heroku, the n we need to adjust our port and directory */
 if ((typeof (port== 'undefined') || (port === null))) {
