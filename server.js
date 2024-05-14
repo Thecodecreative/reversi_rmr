@@ -29,6 +29,6 @@ let app=http.createServer(
     ).resume();
     
     }    
-).listen(port);
+).listen(process.env.PORT || 5000);
 
 console.log('The server is running');
