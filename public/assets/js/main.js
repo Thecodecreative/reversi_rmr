@@ -261,7 +261,7 @@ socket.on('send_chat_message_response', (payload) => {
         return;
     }
 
-    let newHTML = '<p class=\'chat_message _response\'><b>' + payload.username + '</b>: ' + payload.message + '</p>';
+    let newHTML = '<p class=\'chat_message_response\'><b>' + payload.username + '</b>: ' + payload.message + '</p>';
     let newNode = $(newHTML);
     newNode.hide();
     $('#messages').prepend(newNode);
