@@ -513,6 +513,7 @@ io.on('connection', (socket) => {
     serverLog('send_chat_message succeeded', JSON.stringify(response));
   });
 
+
   socket.on('play_token', (payload) => {
     serverLog('Server received a command', '\'send_chat_message\'', JSON.stringify(payload));
 
@@ -559,7 +560,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    let row = player.row;
+    let row = payload.row;
     if ((typeof row  == 'undefined') || (row === null)) {
       response = {};
       response.result = 'fail';
@@ -569,7 +570,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    let column = player.column;
+    let column = payload.column;
     if ((typeof column == 'undefined') || (column === null)) {
       response = {};
       response.result = 'fail';
@@ -579,7 +580,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    let color = player.color;
+    let color = payload.color;
     if ((typeof color == 'undefined') || (color === null)) {
       response = {};
       response.result = 'fail';

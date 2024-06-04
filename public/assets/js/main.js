@@ -315,7 +315,6 @@ socket.on('game_update', (payload) => {
 
 
     /*Animate changes to the board */
-
     for (let row = 0; row < 8; row++) {
         for (let column = 0; column < 8; column++) {
             // Check to see if the server changed any space on the board
