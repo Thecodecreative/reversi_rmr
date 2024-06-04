@@ -477,7 +477,7 @@ io.on('connection', (socket) => {
       response.result = 'fail';
       response.message = 'client did not send a valid room to message';
       socket.emit('send_chat_message_response', response);
-      serverLog('send_chat_messagecommand failed', JSON.stringify(response));
+      serverLog('send_chat_message command failed', JSON.stringify(response));
       return;
     }
 
@@ -508,14 +508,14 @@ io.on('connection', (socket) => {
     response.message = message;
 
     /* Tell everyone in the room what the message is */
-    io.of('/').to(room).emit('play_token', response);
-    response.message = 'play_token_response';
+    io.of('/').to(room).emit('send_chat_message', response);
+    response.message = 'send_chat_message_response';
     serverLog('send_chat_message succeeded', JSON.stringify(response));
   });
 
 
   socket.on('play_token', (payload) => {
-    serverLog('Server received a command', '\'send_chat_message\'', JSON.stringify(payload));
+    serverLog('Server received a command', '\'play_token\'', JSON.stringify(payload));
 
     /*check that the data coming from the client is good */
 
@@ -661,7 +661,7 @@ function send_game_update(socket, game_id, message) {
   /* Make sure that only 2 people are in the room */
   /*Assign this socket a color */
   /* Send game update */
-  /*Check if the game is over */
+  
 
   /* Check to see if a game with a game_id exists */
   if ((typeof games[game_id] == 'undefined') || (games[game_id] === null)) {
@@ -733,6 +733,33 @@ function send_game_update(socket, game_id, message) {
 
     io.of("/").to(game_id).emit('game_update', payload)
   })
+  /*Check if the game is over */
 
+  let count = 0;
+  for (let row=0; row<8; row++){
+    for (let column=0; column<8; column++){
+      if (games[game_id].board[row][column] != ' ') {
+        count++;
+      }
+    }
+  }
+
+  if (count === 64 ) {
+    let payload ={
+      result: 'success',
+      game_id: game_id,
+      game: games[game_id],
+      who_won: 'everyone'
+    }
+    io.in(game_id).emit('game_over', payload)
+
+    setTimeout (
+      ((id) => {
+        return (() =>{
+          delete games[id];
+        });
+      }) (game_id), 60 * 60 * 1000
+    );
+  }
 
 }
