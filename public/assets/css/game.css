@@ -1,0 +1,42 @@
+body{
+  background-color:#F7F7F7;
+}
+
+#messagePane{
+  border: 2px;
+  background-color:#EAF0FF;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.join_room_response, .left_room_response {
+  background-color: #F9F9F9;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.chat_message {
+  font-size:100%;
+    background-color: #EAF0FF;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+table#game_board {
+    border: 4px solid black;
+    margin: 0px;
+    padding: 0px;
+}
+
+table#game_board td{
+    border: 1px solid black;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+td.hovered_over:hover {
+  background-image: url('/assets/images/hover.gif');
+}
