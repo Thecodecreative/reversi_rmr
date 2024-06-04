@@ -250,7 +250,7 @@ function sendChatMessage() {
 }
 
 
-socket.on('send_chat_message_response', (payload) => {
+socket.on('chat_message_response', (payload) => {
     if ((typeof payload == 'undefined') || (payload === null)) {
         console.log('Server did not send a payload');
         return;
