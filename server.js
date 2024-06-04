@@ -508,8 +508,8 @@ io.on('connection', (socket) => {
     response.message = message;
 
     /* Tell everyone in the room what the message is */
-    io.of('/').to(room).emit('send_chat_message', response);
-    response.message = 'send_chat_message_response';
+    io.of('/').to(room).emit('send_chat_message_response', response);
+    //response.message = 'send_chat_message_response';
     serverLog('send_chat_message succeeded', JSON.stringify(response));
   });
 
@@ -551,7 +551,7 @@ io.on('connection', (socket) => {
 
 
     let game_id = player.room;
-    if ((typeof game_id  == 'undefined') || (game_id  === null)) {
+    if ((typeof game_id == 'undefined') || (game_id === null)) {
       response = {};
       response.result = 'fail';
       response.message = 'There was no valid game associated with the play_token';
@@ -561,7 +561,7 @@ io.on('connection', (socket) => {
     }
 
     let row = payload.row;
-    if ((typeof row  == 'undefined') || (row === null)) {
+    if ((typeof row == 'undefined') || (row === null)) {
       response = {};
       response.result = 'fail';
       response.message = 'There was no valid row associated with the play_token';
@@ -601,7 +601,7 @@ io.on('connection', (socket) => {
       return;
     }
 
-    let response ={
+    let response = {
       result: 'success'
     }
     socket.emit('play_token_response', response);
@@ -661,7 +661,7 @@ function send_game_update(socket, game_id, message) {
   /* Make sure that only 2 people are in the room */
   /*Assign this socket a color */
   /* Send game update */
-  
+
 
   /* Check to see if a game with a game_id exists */
   if ((typeof games[game_id] == 'undefined') || (games[game_id] === null)) {
@@ -736,16 +736,16 @@ function send_game_update(socket, game_id, message) {
   /*Check if the game is over */
 
   let count = 0;
-  for (let row=0; row<8; row++){
-    for (let column=0; column<8; column++){
+  for (let row = 0; row < 8; row++) {
+    for (let column = 0; column < 8; column++) {
       if (games[game_id].board[row][column] != ' ') {
         count++;
       }
     }
   }
 
-  if (count === 64 ) {
-    let payload ={
+  if (count === 64) {
+    let payload = {
       result: 'success',
       game_id: game_id,
       game: games[game_id],
@@ -753,12 +753,12 @@ function send_game_update(socket, game_id, message) {
     }
     io.in(game_id).emit('game_over', payload)
 
-    setTimeout (
+    setTimeout(
       ((id) => {
-        return (() =>{
+        return (() => {
           delete games[id];
         });
-      }) (game_id), 60 * 60 * 1000
+      })(game_id), 60 * 60 * 1000
     );
   }
 

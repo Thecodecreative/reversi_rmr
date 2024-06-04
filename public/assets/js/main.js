@@ -250,7 +250,7 @@ function sendChatMessage() {
 }
 
 
-socket.on('chat_message_response', (payload) => {
+socket.on('send_chat_message_response', (payload) => {
     if ((typeof payload == 'undefined') || (payload === null)) {
         console.log('Server did not send a payload');
         return;
@@ -261,7 +261,7 @@ socket.on('chat_message_response', (payload) => {
         return;
     }
 
-    let newHTML = '<p class=\'chat_message_response\'><b>' + payload.username + '</b>: ' + payload.message + '</p>';
+    let newHTML = '<p class=\'send_chat_message_response\'><b>' + payload.username + '</b>: ' + payload.message + '</p>';
     let newNode = $(newHTML);
     newNode.hide();
     $('#messages').prepend(newNode);
