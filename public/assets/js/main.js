@@ -429,6 +429,7 @@ socket.on('game_update', (payload) => {
         }
 
     }
+
     clearInterval(interval_timer);
     interval_timer = setInterval(((last_time) => {
         return (() => {
@@ -437,26 +438,36 @@ socket.on('game_update', (payload) => {
             let minutes = Math.floor(elapsed_m / 1000 / 60);
             let seconds = Math.floor(elapsed_m % (60 * 1000) / 1000);
             let total = minutes * 60 + seconds;
-            if (total > 100) {
-                total = 100;
+            if (total > 30) {
+                total = 30;
             }
-            $("#elapsed").css("width", total + "%").attr("aria-valuenow", total);
+            $("#elapsed").css("width", total + "%").attr("aria-valuenow", total );
             let timestring = " " + seconds;
             timestring = timestring.padStart(2, '0');
             timestring = minutes + ":" + timestring;
-            if (total < 100) {
+            if (total < 30) {
                 $("#elapsed").html(timestring);
             }
             else {
                 $("#elapsed").html("Time Up");
+                if (payload.game.whose_turn === my_color) {
+                    let payload = {
+                        row: -1,
+                        column: -1,
+                        color: ' '
+                    };
+                    console.log('**** client log message, sending \'play_token\'command: ' + JSON.stringify(payload));
+                    socket.emit('play_token', payload);
+                }
             }
         })
     })(payload.game.last_move_time), 1000);
 
 
 
-    $('#whitesum').html(whitesum);
-    $('#blacksum').html(blacksum);
+
+    $('#whitesum').html('<h5>' + whitesum + '</h5>');
+    $('#blacksum').html('<h5>' + blacksum + '</h5>');
     old_board = board;
 })
 

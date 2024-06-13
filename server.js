@@ -604,7 +604,7 @@ io.on('connection', (socket) => {
 
     /* make sure the current attempt is by the correct color*/
 
-    if (color !== game.whose_turn) {
+    if ((color !== game.whose_turn) && (color !== ' ')) {
       let response = {
         result: 'fail',
         message: 'play_token played the wrong color. it\'s not their turn.'
@@ -615,24 +615,26 @@ io.on('connection', (socket) => {
     }
 
     /* Make sure the current play is coming from the expected player */
-
-    if (
-      ((game.whose_turn === 'white') && (game.player_white.socket != socket.id)) ||
-      ((game.whose_turn === 'black') && (game.player_black.socket != socket.id))
-    ) {
-      let response = {
-        result: 'fail',
-        message: 'play_token played the right color, but by the wrong player.'
+    if (color !== ' ') {
+      if (
+        ((game.whose_turn === 'white') && (game.player_white.socket != socket.id)) ||
+        ((game.whose_turn === 'black') && (game.player_black.socket != socket.id))
+      ) {
+        let response = {
+          result: 'fail',
+          message: 'play_token played the right color, but by the wrong player.'
+        }
+        socket.emit('play_token_response', response);
+        serverLog('play_token command failed', JSON.stringify(response));
+        return;
       }
-      socket.emit('play_token_response', response);
-      serverLog('play_token command failed', JSON.stringify(response));
-      return;
     }
 
     let response = {
       result: 'success'
     }
     socket.emit('play_token_response', response);
+
 
     /*Execute the move */
     if (color === 'white') {
@@ -648,8 +650,14 @@ io.on('connection', (socket) => {
       game.legal_moves = calculate_legal_moves('w', game.board);
     }
 
-    let d= new Date();
-    game.last_move_time=d.getTime();
+    else if (color === ' ') {
+      game.whose_turn = (game.whose_turn === 'white') ? 'black' : 'white';
+      game.legal_moves = calculate_legal_moves(game.whose_turn.substr(0,1), game.board);
+    }
+
+    let d = new Date();
+    game.last_move_time = d.getTime();
+
 
     send_game_update(socket, game_id, 'played a token')
 
